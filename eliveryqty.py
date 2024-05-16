@@ -18,8 +18,8 @@ class OptionChain():
         try:
             data = self.__session.get(url=self.__url, timeout=self.__timeout)
             data = data.json()
-
-            return data
+            df = pd.json_normalize(data['data'])
+            return df
         except Exception as ex:
             print('Error: {}'.format(ex))
             self.__session.get("https://www.nseindia.com/option-chain", timeout=self.__timeout, cookies=self.__session.cookies)
@@ -28,6 +28,13 @@ class OptionChain():
 if __name__ == '__main__':
     nifty_100_stocks = ['ABB','ADANIENSOL','ADANIENT','ADANIGREEN','ADANIPORTS','ADANIPOWER','ATGL','AMBUJACEM','APOLLOHOSP','ASIANPAINT','DMART','AXISBANK','BAJAJ-AUTO','BAJFINANCE','BAJAJFINSV','BAJAJHLDNG','BANKBARODA','BERGEPAINT','BEL','BPCL','BHARTIARTL','BOSCHLTD','BRITANNIA','CANBK','CHOLAFIN','CIPLA','COALINDIA','COLPAL','DLF','DABUR','DIVISLAB','DRREDDY','EICHERMOT','GAIL','GODREJCP','GRASIM','HCLTECH','HDFCBANK','HDFCLIFE','HAVELLS','HEROMOTOCO','HINDALCO','HAL','HINDUNILVR','ICICIBANK','ICICIGI','ICICIPRULI','ITC','IOC','IRCTC','IRFC','INDUSINDBK','NAUKRI','INFY','INDIGO','JSWSTEEL','JINDALSTEL','JIOFIN','KOTAKBANK','LTIM','LT','LICI','M%26M','MARICO','MARUTI','NTPC','NESTLEIND','ONGC','PIDILITIND','PFC','POWERGRID','PNB','RECLTD','RELIANCE','SBICARD','SBILIFE','SRF','MOTHERSON','SHREECEM','SHRIRAMFIN','SIEMENS','SBIN','SUNPHARMA','TVSMOTOR','TCS','TATACONSUM','TATAMTRDVR','TATAMOTORS','TATAPOWER','TATASTEEL','TECHM','TITAN','TORNTPHARM','TRENT','ULTRACEMCO','MCDOWELL-N','VBL','VEDL','WIPRO','ZOMATO','ZYDUSLIFE']
     nifty_50_stocks = ['COALINDIA','CIPLA','BPCL','BHARTIARTL','POWERGRID','NTPC','M%26M','HCLTECH','LT','HINDALCO','TATASTEEL','ADANIPORTS','WIPRO','AXISBANK','ICICIBANK','ADANIENT','SBIN','LTIM','DRREDDY','KOTAKBANK','TECHM','BAJFINANCE','ONGC','GRASIM','HEROMOTOCO','APOLLOHOSP','DIVISLAB','INDUSINDBK','SBILIFE','RELIANCE','INFY','ITC','BAJAJFINSV','MARUTI','TCS','ULTRACEMCO','TITAN','SHRIRAMFIN','NESTLEIND','HINDUNILVR','HDFCLIFE','SUNPHARMA','JSWSTEEL','HDFCBANK','TATACONSUM','BRITANNIA','EICHERMOT','ASIANPAINT','BAJAJ-AUTO','TATAMOTORS']
+    lastweek=[]
+    recentweek =[]
     for symbol in nifty_50_stocks:
         oc = OptionChain("06-05-2024", "10-05-2024", symbol)
-        print(oc.fetch_data())
+        lastweek.append(oc.fetch_data())
+    print(lastweek)
+    for symbol in nifty_50_stocks:
+        oc = OptionChain("11-05-2024", "15-05-2024", symbol)
+        recentweek.append(oc.fetch_data())
+    print(recentweek)
