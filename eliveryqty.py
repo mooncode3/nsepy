@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class OptionChain():
-    def __init__(self, fromDate, toDate, symbol='ABB', timeout=10) -> None:
+    def __init__(self, fromDate, toDate, symbol='ABB', timeout=5) -> None:
         self.__url = (
             "https://www.nseindia.com/api/historical/securityArchives?from={}&to={}&symbol={}&dataType=priceVolumeDeliverable&series=EQ").format(
             fromDate, toDate, symbol)
@@ -22,7 +22,7 @@ class OptionChain():
             return data
         except Exception as ex:
             print('Error: {}'.format(ex))
-            self.__session.get("https://www.nseindia.com/option-chain", timeout=self.__timeout)
+            self.__session.get("https://www.nseindia.com/option-chain", timeout=self.__timeout, cookies=self.__session.cookies)
 
 
 if __name__ == '__main__':
