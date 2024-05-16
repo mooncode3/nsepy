@@ -57,13 +57,18 @@ if __name__ == '__main__':
     lastweek = []
     recentweek = []
     for symbol in nifty_50_stocks:
-        oc = OptionChain("06-05-2024", "10-05-2024", symbol)
+        oc = OptionChain("29-04-2024", "03-05-2024", symbol)
         lastweek.append(oc.fetch_data())
     #print(lastweek)
     for symbol in nifty_50_stocks:
-        oc = OptionChain("11-05-2024", "15-05-2024", symbol)
+        oc = OptionChain("06-05-2024", "10-05-2024", symbol)
         recentweek.append(oc.fetch_data())
     #print(recentweek)
-
+    stocks_vol_bo = []
     for pair in zip(recentweek, lastweek):
-        print(get_sum(pair[0]) > get_sum(pair[1]))
+        if get_sum(pair[0]) > get_sum(pair[1]):
+            #print(pair[0]['CH_SYMBOL'][0] + ' ====== ' + pair[1]['CH_SYMBOL'][0])
+            #print(get_sum(pair[0]) - get_sum(pair[1]))
+            stocks_vol_bo.append(pair[0]['CH_SYMBOL'][0] + ' {}'.format(get_sum(pair[0]) - get_sum(pair[1])))
+    print(stocks_vol_bo)
+
