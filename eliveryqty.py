@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import openpyxl
 
 
 class OptionChain():
@@ -123,6 +124,11 @@ if __name__ == '__main__':
             data = {'symbol': pair[0]['HIT_INDEX_NAME_UPPER'][0], 'vol': get_sum(pair[0], 'HIT_TRADED_QTY') - get_sum(pair[1], 'HIT_TRADED_QTY')}
             indices_vol_bo.append(data)
     print(indices_vol_bo)
+    res_data = [stocks_vol_bo, indices_vol_bo]
+    #df = pd.DataFrame(res_data)
+    df = pd.DataFrame.from_records(res_data, index=['1', '2'])
+    df.to_excel("output.xlsx")
+    print(df)
 
 #EOD_INDEX_NAME,
 #https://www.nseindia.com/api/historical/indicesHistory?indexType=NIFTY%2050&from=10-05-2024&to=17-05-2024
